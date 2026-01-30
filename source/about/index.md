@@ -10,9 +10,23 @@ date: 2026-01-29 16:55:00
 ### 我的兴趣
 * RIS 系统
 * LaTeX
+* 前段开发
 
 ### 我的生活照
-
+<div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+  <div style="width: 48%;">
+    <img src="/images/p1.jpg" style="border-radius: 10px; width: 100%; object-fit: cover;" alt="生活照1">
+  </div>
+  <div style="width: 48%;">
+    <img src="/images/p2.jpg" style="border-radius: 10px; width: 100%; object-fit: cover;" alt="生活照2">
+  </div>
+  <div style="width: 48%;">
+    <img src="/images/p3.jpg" style="border-radius: 10px; width: 100%; object-fit: cover;" alt="生活照3">
+  </div>
+  <div style="width: 48%;">
+    <img src="/images/p4.jpg" style="border-radius: 10px; width: 100%; object-fit: cover;" alt="生活照4">
+  </div>
+</div>
 
 ## 各大社交平台及历代前网名
 
