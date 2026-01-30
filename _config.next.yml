@@ -1,0 +1,185 @@
+# ---------------------------------------------------------------
+# 1. 主题外观 (Scheme)
+# ---------------------------------------------------------------
+scheme: Gemini
+
+# ---------------------------------------------------------------
+# 2. 侧边栏设置 (Sidebar)
+# ---------------------------------------------------------------
+sidebar:
+  position: left
+  display: post
+  padding: 18
+  offset: 12
+  onmobile: true  
+
+  # 侧边栏上显示的头像
+avatar:
+  url: /images/avatar.jpg
+  rounded: true
+  rotated: false
+
+# ---------------------------------------------------------------
+# 3. 菜单设置 (Menu) - 这里就是你要的“文章列表”！
+# ---------------------------------------------------------------
+menu:
+  home: / || fa fa-home
+  archives: /archives/ || fa fa-archive
+  categories: /categories/ || fa fa-th   <-- 加上这一行
+  tags: /tags/ || fa fa-tags
+  photos: /photos/ || fa fa-camera
+  about: /about/ || fa fa-user
+
+# 设置菜单图标
+menu_settings:
+  icons: true
+  badges: true
+
+# ---------------------------------------------------------------
+# 4. 社交链接 (Social) - 填补侧边栏下方的空白
+# ---------------------------------------------------------------
+social:
+  GitHub: https://github.com/Windsor-Andrew || fab fa-github
+  E-Mail: mailto:zixaunpeng681@gmail.com || fa fa-envelope
+  # 还可以加:
+  Bilibili: https://space.bilibili.com/332737053 || fab fa-bilibili
+  Douban: https://www.douban.com/people/202616606 || fa fa-tv
+
+# ---------------------------------------------------------------
+# 5. 背景设置 (Background)
+# ---------------------------------------------------------------
+# 启用自定义样式文件 (为了加背景图)
+custom_file_path:
+  style: source/_data/styles.styl
+  languages: source/_data/languages.yml
+
+local_search:
+  enable: true  <-- 关键就是这里改成 true
+  # If auto, trigger search by changing input.
+  # If manual, trigger search by pressing enter key or search button.
+  trigger: auto
+  # Show top n results per article, show all results by setting to -1
+  top_n_per_article: 5
+  # Unescape html strings to the readable one.
+  unescape: false
+  # Preload the search data when the page loads.
+  preload: false
+
+# 字数统计 & 阅读时间
+symbols_count_time:
+  separated_meta: true     # 是否换行显示
+  item_text_post: true     # 文章页显示文字 "本文字数"
+  item_text_total: true    # 底部显示全站总字数
+  awl: 4                   # 平均字长 (CN=4, EN=5)
+  wpm: 275                 # 阅读速度
+  suffix: "mins."          # 时间单位
+
+reading_progress:
+  enable: true        <-- 改为 true
+  start_at_top: false # true=在最顶端, false=在导航栏下方(推荐 false)
+  color: "#37c6c0"    # 进度条颜色 (你可以改成自己喜欢的，比如 #ff0000)
+  height: 3px         # 进度条高度
+
+busuanzi_count:
+  enable: true             <-- 改为 true
+  total_visitors: true     # 显示总访客数 (UV)
+  total_visitors_icon: fa fa-user
+  total_views: true        # 显示总访问量 (PV)
+  total_views_icon: fa fa-eye
+  post_views: true         # 在文章标题下显示阅读量
+  post_views_icon: fa fa-eye
+
+
+# 标签云设置
+tag_cloud:
+  min: 12      # 最小字号 (文章少的标签)
+  max: 30      # 最大字号 (文章多的标签)
+  start: "#a4d8fa" # 颜色渐变起点 (浅蓝)
+  end: "#0c5b9e"   # 颜色渐变终点 (深蓝)
+  amount: 200  # 最多显示多少个标签
+
+font:
+  enable: true
+  # 字体库地址 (国内如果访问慢，可以把下面这行改成 host: https://fonts.loli.net)
+  host: https://fonts.googleapis.com
+  
+  # 全局字体 (备用)
+  global:
+    external: true
+    family: Noto Sans SC
+    size:
+  
+  # 标题字体 (宋体，更有书卷气)
+  headings:
+    external: true
+    family: Noto Serif SC
+    size:
+  
+  # 正文字体 (黑体，清晰易读)
+  body:
+    external: true
+    family: Noto Sans SC
+    size:
+  
+  # 代码字体 (等宽字体)
+  code:
+    external: true
+    family: JetBrains Mono
+    size:
+
+codeblock:
+  border_radius: true      # 代码块圆角
+  copy_button:
+    enable: true           # 开启复制按钮 (必开！)
+    show_result: true      # 复制成功后显示 "Copied!"
+    style: mac             # 风格：default | flat | mac
+
+creative_commons:
+  license: by-nc-sa      # 署名-非商业性使用-相同方式共享 (最常用的博客协议)
+  sidebar: false          # 是否在侧边栏显示 (一般选 false)
+  post: true              # 【关键】开启文章底部的版权声明
+  language: deedu        # 语言默认即可
+
+math:
+  mathjax:
+    enable: true          # 开启 MathJax
+    tags: none            # 默认不给公式自动编号
+
+favicon:
+  small: /images/favicon.ico     # 浏览器标签页上的小图标 (16x16 或 32x32)
+  medium: /images/favicon.ico    # 收藏夹或移动端显示的中图标 (通常 32x32 以上)
+  apple_touch_icon: /images/favicon.ico # 苹果设备添加到主屏幕时的图标
+  safari_pinned_tab: /images/favicon.ico
+  # android_manifest: /images/manifest.json # 这个一般不用管，除非你做 PWA
+
+footer:
+  # 开始年份 (如果填了 2026，到了 2027 年会自动显示 "2026 - 2027")
+  since: 2026
+  
+  # 图标 (默认是 user，可以改成爱心 heart)
+  icon:
+    name: fa fa-heart
+    animated: true      # 让图标像心跳一样跳动
+    color: "#ff0000"    # 红色爱心
+  
+  # 版权信息 (默认显示 Author)
+  copyright: pengzixuan
+  
+  # 是否显示 "Powered by Hexo" (建议 false)
+  powered: false
+  
+  # 是否显示 "Theme - NexT" (建议 false)
+  theme:
+    enable: false
+    version: false
+
+# 打赏设置
+reward_settings:
+  enable: true             # 开启打赏
+  animation: true          # 按钮动画
+  comment: "原创不易，请我不喝咖啡也能扫个码~"  # 打赏下方的文字
+
+reward:
+  wechatpay: /images/wechatpay.png || fab fa-weixin
+  alipay: /images/alipay.png || fab fa-alipay
+  # paypal: /images/paypal.png || fab fa-paypal  (如果有的话)

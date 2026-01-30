@@ -1,0 +1,41 @@
+// ==================================================
+// 1. 全局背景图设置 (你原来的代码)
+// ==================================================
+body {
+    background: url(/images/back.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+}
+
+// ==================================================
+// 2. 圆角美化设置 (新增的代码)
+// ==================================================
+
+// 顶部标题栏 (左侧) - 上圆下直
+.site-brand-container {
+  border-radius: 20px 20px 0 0;
+}
+
+// 侧边栏主体 (左侧) - 上直下圆
+.sidebar-inner {
+  border-radius: 0 0 20px 20px;
+}
+
+// 文章卡片 (右侧) - 四周圆角
+.post-block {
+  border-radius: 20px;
+}
+
+// 评论区 (如果有)
+.comments {
+  border-radius: 20px;
+}
+
+// 分页按钮
+.pagination {
+  border-radius: 20px;
+  background: var(--card-bg-color); // 保持和卡片一致的背景
+  padding: 10px;
+}
