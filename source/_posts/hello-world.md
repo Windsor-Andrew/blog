@@ -1,6 +1,6 @@
 ---
 title: Hello World
-date: 2026-01-30 10:00:00
+date: 2026-01-01 10:00:00
 comments: true
 sticky: 1
 permalink: main-page
