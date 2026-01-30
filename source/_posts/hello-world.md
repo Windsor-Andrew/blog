@@ -1,7 +1,9 @@
 ---
 title: Hello World
 date: 2026-01-30 10:00:00
+comments: true
 sticky: 1
+permalink: main-page
 ---
 # 欢迎来到我的主页！
 
