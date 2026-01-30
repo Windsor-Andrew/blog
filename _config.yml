@@ -14,7 +14,7 @@ timezone: Asia/Shanghai
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
 url: https://pengzixuan.top
-permalink: posts/:abbrlink/  <-- 如果是这种写法
+permalink: posts/:abbrlink/
 permalink_defaults:
 pretty_urls:
   trailing_index: true # Set to false to remove trailing 'index.html' from permalinks
@@ -115,3 +115,8 @@ search:
   field: post
   content: true
   format: html
+
+# abbrlink config
+abbrlink:
+  alg: crc32      # 算法：crc16(default) or crc32
+  rep: hex        # 进制：dec(default) or hex
