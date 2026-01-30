@@ -24,7 +24,7 @@ date: 2026-01-29 16:55:00
     <img src="/images/p3.jpg" style="border-radius: 10px; width: 100%; object-fit: cover;" alt="生活照3">
   </div>
   <div style="width: 48%;">
-    <img src="/images/p4.jpg" style="border-radius: 10px; width: 100%; object-fit: cover;" alt="生活照4">
+    <img src="/images/p4.jpeg" style="border-radius: 10px; width: 100%; object-fit: cover;" alt="生活照4">
   </div>
 </div>
 
@@ -33,41 +33,29 @@ date: 2026-01-29 16:55:00
 / 公开
 
 哔哩哔哩：顶戴花翎加九锡，萧正德上马（18年7月始）
-
 微信读书：耀眼星辰闪耀时，Ciel Et Terre（18年10月始）
-
 豆瓣：寂寞拜占庭，春风笑疏中庭树（19年8月始）
-
 *STEAM：槛内·套中·局外，随风走过四季（22年8月始）*
 
 / 清空（1级）
 
 网易云：VANISIG，当哥特式回忆浮现（17年8月始，25年9月重建）
-
 百度贴吧：学海无涯乐作舟，月落乌啼霜满天（18年6月始）
-
 知乎：御赐正一品翰林大学士，故园三两声（18年7月始）
-
 *Telegram：终将孤独离去，守序邪恶（23年1月始）*
 
 / 清空（2级）
 
 微信：감자볶음 잼 / 果酱炒土豆丝，嘭嘭嘭BoomBoomBass～（18年7月始）
-
 微博：泮池的跛鸭，TENS不再来（19年7月始，25年7月重建）
-
 小红书：所爱隔山海 / 愛する山海を隔てて，拥衾时炷海南香（21年7月始，25年9月重建）
-
 *X：青州行台仆射，春风十里长似你（23年1月始）*
 
 / 私人
 
 QQ：未名湖畔 等一人，宝鼎茶闲烟尚绿 / 幽窗棋罢指犹凉（13年6月始）
-
 QQ音乐：我与我周旋久，独行潭底影（17年10月始）
-
 抖音：胶（东）王狸奴，逝去的孤影（20年1月始）
-
 *Instagram：der_tod_in_venedig196，Civet_slave_toris0916（23年2月始）*
 
 ### ***终极审判书：PZX的十宗罪***

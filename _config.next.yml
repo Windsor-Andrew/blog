@@ -182,4 +182,3 @@ reward_settings:
 reward:
   wechatpay: /images/wechatpay.png || fab fa-weixin
   alipay: /images/alipay.png || fab fa-alipay
-  # paypal: /images/paypal.png || fab fa-paypal  (如果有的话)
