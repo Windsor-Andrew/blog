@@ -68,3 +68,39 @@ body {
 .highlight {
   background: rgba(0, 0, 0, 0.6) !important;
 }
+
+// ==================================================
+//  强制锁定深色模式 (Force Dark Mode)
+//  让网站无视系统亮色设置，永远保持暗黑风格
+// ==================================================
+
+:root {
+  // 1. 强制定义全局变量为“深色版”
+  --body-bg-color: #222 !important;        /* 网页整体背景：深灰 */
+  --content-bg-color: #333 !important;     /* 文章背景色：深灰 */
+  --card-bg-color: #555 !important;        /* 卡片背景 */
+  --text-color: #eee !important;           /* 正文文字：浅灰白 */
+  --blockquote-color: #ccc !important;     /* 引用文字颜色 */
+  --link-color: #e1e1e1 !important;        /* 链接颜色 */
+  --link-hover-color: #ff0000 !important;  /* 链接悬停颜色 */
+  
+  // 2. 修正侧边栏文字颜色
+  --menu-item-bg-color: rgba(0,0,0,0) !important;
+}
+
+// 3. 强制背景变黑 (防止浅色模式下背景变白)
+body {
+  background-color: #222 !important;
+  color: #eee !important;
+}
+
+// 4. 确保之前的“磨砂玻璃”效果在浅色模式下依然是黑色的
+.sidebar-inner, .content-wrap, .post-block, .header-inner {
+  // 这里的颜色必须是深色 rgba，否则浅色模式下会变成半透明白色
+  background: rgba(34, 34, 34, 0.7) !important; 
+}
+
+// 5. 修复浅色模式下文章标题变黑的问题
+.posts-expand .post-title-link {
+  color: #fff !important;
+}
