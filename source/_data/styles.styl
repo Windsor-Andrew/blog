@@ -1,0 +1,106 @@
+// ==================================================
+// 1. 全局背景图设置 (你原来的代码)
+// ==================================================
+body {
+    background: url(/images/back.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+}
+
+// ==================================================
+// 2. 圆角美化设置 (新增的代码)
+// ==================================================
+
+// 顶部标题栏 (左侧) - 上圆下直
+.site-brand-container {
+  border-radius: 20px 20px 0 0;
+}
+
+// 侧边栏主体 (左侧) - 上直下圆
+.sidebar-inner {
+  border-radius: 0 0 20px 20px;
+}
+
+// 文章卡片 (右侧) - 四周圆角
+.post-block {
+  border-radius: 20px;
+}
+
+// 评论区 (如果有)
+.comments {
+  border-radius: 20px;
+}
+
+// 分页按钮
+.pagination {
+  border-radius: 20px;
+  background: var(--card-bg-color); // 保持和卡片一致的背景
+  padding: 10px;
+}
+
+// ==================================================
+//  毛玻璃透明特效 (让背景图透出来)
+// ==================================================
+
+// 1. 设置侧边栏 (左侧信息栏) 的透明度
+.sidebar-inner {
+  // rgba(34, 34, 34, 0.7) 意思就是：深灰色，70% 不透明度
+  background: rgba(34, 34, 34, 0.8) !important;
+  // 这一行是灵魂：增加“磨砂玻璃”模糊效果
+  backdrop-filter: blur(10px); 
+}
+
+// 2. 设置右侧文章主体区域的透明度
+.content-wrap, .post-block {
+  background: rgba(34, 34, 34, 0.8) !important;
+  backdrop-filter: blur(10px);
+}
+
+// 3. (可选) 如果有顶部菜单栏，也一起变透明
+.header-inner {
+  background: rgba(34, 34, 34, 0.8) !important;
+  backdrop-filter: blur(10px);
+}
+
+// 4. (可选) 让文章里的代码块背景也稍微深一点，避免混淆
+.highlight {
+  background: rgba(0, 0, 0, 0.6) !important;
+}
+
+// ==================================================
+//  强制锁定深色模式 (Force Dark Mode)
+//  让网站无视系统亮色设置，永远保持暗黑风格
+// ==================================================
+
+:root {
+  // 1. 强制定义全局变量为“深色版”
+  --body-bg-color: #222 !important;        /* 网页整体背景：深灰 */
+  --content-bg-color: #333 !important;     /* 文章背景色：深灰 */
+  --card-bg-color: #555 !important;        /* 卡片背景 */
+  --text-color: #eee !important;           /* 正文文字：浅灰白 */
+  --blockquote-color: #ccc !important;     /* 引用文字颜色 */
+  --link-color: #e1e1e1 !important;        /* 链接颜色 */
+  --link-hover-color: #ff0000 !important;  /* 链接悬停颜色 */
+  
+  // 2. 修正侧边栏文字颜色
+  --menu-item-bg-color: rgba(0,0,0,0) !important;
+}
+
+// 3. 强制背景变黑 (防止浅色模式下背景变白)
+body {
+  background-color: #222 !important;
+  color: #eee !important;
+}
+
+// 4. 确保之前的“磨砂玻璃”效果在浅色模式下依然是黑色的
+.sidebar-inner, .content-wrap, .post-block, .header-inner {
+  // 这里的颜色必须是深色 rgba，否则浅色模式下会变成半透明白色
+  background: rgba(34, 34, 34, 0.7) !important; 
+}
+
+// 5. 修复浅色模式下文章标题变黑的问题
+.posts-expand .post-title-link {
+  color: #fff !important;
+}
