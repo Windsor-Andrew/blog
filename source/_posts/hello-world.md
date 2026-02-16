@@ -1,9 +1,10 @@
 ---
 title: Hello World
-date: 2026-01-01 10:00:00
 comments: true
 sticky: 1
 permalink: main-page/
+abbrlink: 4a17b156
+date: 2026-01-01 10:00:00
 ---
 # 欢迎来到我的主页！
 
