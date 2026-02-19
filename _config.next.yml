@@ -60,11 +60,11 @@ local_search:
   # If manual, trigger search by pressing enter key or search button.
   trigger: auto
   # Show top n results per article, show all results by setting to -1
-  top_n_per_article: 5
+  top_n_per_article: 10
   # Unescape html strings to the readable one.
   unescape: false
   # Preload the search data when the page loads.
-  preload: false
+  preload: true
 
 # 字数统计 & 阅读时间
 symbols_count_time:
@@ -90,6 +90,13 @@ busuanzi_count:
   post_views: true         # 在文章标题下显示阅读量
   post_views_icon: fa fa-eye
 
+bookmark:
+  enable: true          # 文章书签功能（浏览器本地存储，读者可标记阅读位置）
+
+copycode:
+  enable: true          # 代码块一键复制按钮 + 提示“已复制”
+  show_result: true     # 显示复制成功 toast
+  style: mac            # macOS 风格按钮，更美观
 
 # 标签云设置
 tag_cloud:
@@ -189,7 +196,7 @@ comments:
   active: giscus  # 👈 这里改成 giscus
   # ... 其他的不动
 
-giscus:
+  giscus:
   enable: true
   repo: Windsor-Andrew/blog             # 你的用户名/仓库名
   repo_id: R_kgDORDYTUg                      # 👈 填入刚才获取的 data-repo-id
@@ -218,3 +225,66 @@ mediumzoom:
   # 可选参数（默认就好）
   # delay: 300          # 延迟 ms
   # background: rgba(0,0,0,0.8)  # 如果想加背景
+
+copycode:
+  enable: true          # 代码块一键复制按钮 + 提示“已复制”
+  show_result: true     # 显示复制成功 toast
+  style: mac            # macOS 风格按钮，更美观
+
+back2top:
+  enable: true
+  sidebar: true         # 侧边浮动“返回顶部”按钮（比只在 footer 好）
+  scrollpercent: true   # 按钮上显示滚动百分比（小细节加分）
+
+sidebar:
+  position: left        # 或 right，根据喜好
+  display: post         # 只在文章页显示侧边栏（首页干净）
+  offset: 12            # 侧边栏与内容间距（像素），调大点更呼吸
+
+menu_settings:
+  badges: true          # 菜单项显示文章/分类/标签数量小徽章（很专业）
+  icons: true           # 确保菜单图标开启（已加 RSS，可继续加其他）
+
+toc:
+  enable: true          # 文章目录（TOC）
+  number: true          # 带编号（1.、1.1.）
+  auto_open: true       # 自动展开当前章节
+  max_depth: 3          # 目录深度，3 层够用不乱
+
+open_graph:
+  enable: true          # 开启 Open Graph（微信/微博/X 分享时有好预览图+描述）
+  options:
+    type: blog          # 或 article
+    # 可以加自定义字段，如 twitter:card: summary_large_image
+
+twitter:
+  enable: true
+  username: shawn_peng196  # 你的 X handle，加了分享卡片更好看
+
+lazyload:
+  enable: true          # 图片懒加载（页面滚动时才加载，首屏更快）
+  only_post: true       # 只在文章页启用（首页列表不懒载，避免闪烁）
+  loading_image: /images/loading.gif  # 自定义占位图（小 spinner 很精致）
+
+cache:
+  enable: true          # 构建缓存，hexo g 更快（开发时省时间）
+
+font:
+  family:
+    global:               # 全局字体微调
+      - "Noto Serif SC"
+      - "Georgia"
+      - serif
+  size: 16px              # 基础字号，中文建议 16-18px
+
+inject:
+  head:                   # 自定义 head 注入（加 favicon、meta 等）
+    - '<link rel="icon" href="/images/favicon-32x32.png" sizes="32x32">'
+  body_end: []            # 加自定义 JS 或统计代码
+
+scheme: Gemini            # 切换 scheme（Gemini/Pisces 对 dark 和细节支持更好，Muse 更文艺）
+
+# 如果你开了 darkmode，再加这个让切换更丝滑
+lightdark:
+  enable: true
+  check_supports: true    # 浏览器原生支持 light-dark() 时用 CSS 变量，性能更好
