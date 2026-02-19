@@ -1,0 +1,19 @@
+<script>
+  function scrollToSearchKeyword() {
+    // 设置 500 毫秒的延迟，等待页面的图片和布局加载完毕，防止滚动位置计算错误
+    setTimeout(function() {
+      // NexT 主题会把搜索关键词用 <mark class="search-keyword"> 包裹起来
+      var keyword = document.querySelector('mark.search-keyword');
+      if (keyword) {
+        // 核心代码：平滑滚动到该元素，并且让它显示在屏幕正中间 (center)
+        keyword.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }, 500);
+  }
+
+  // 当正常页面加载完成时执行
+  window.addEventListener('DOMContentLoaded', scrollToSearchKeyword);
+  
+  // 兼容 Pjax（预防如果你未来开启了页面无刷新加载模式）
+  document.addEventListener('pjax:success', scrollToSearchKeyword);
+</script>

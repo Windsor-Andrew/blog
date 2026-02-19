@@ -199,3 +199,12 @@ giscus:
   emit_metadata: 0
   theme: dark                           # 👈 既然你锁定了深色模式，这里直接填 dark
   lang: zh-CN                           # 语言设为中文
+
+# Dark Mode
+darkmode: true  # 全局启用 Dark Mode（默认跟随系统偏好）
+
+# 更高级的 Light-Dark Mode（2025+ 新增，支持原生 light-dark() 函数）
+lightdark:
+  enable: true          # 开启高级模式（推荐）
+  # 如果浏览器支持 @supports (color: light-dark(red, red))，会用原生
+  # 否则 fallback 到 JS 切换

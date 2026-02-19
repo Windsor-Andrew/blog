@@ -125,3 +125,17 @@ abbrlink:
   rep: hex        # 进制：dec(default) or hex
 
 comments: true
+
+feed:
+  type: atom       # 或 rss2 / json
+  path: atom.xml   # 生成的文件路径
+  limit: 20        # 显示最近多少篇文章
+  hub:
+  content:
+  content_limit: 140
+  order_by: -date
+
+custom_file_path:
+  style: source/_data/styles.styl
+  languages: source/_data/languages.yml
+  bodyEnd: source/_data/body-end.njk   <-- 增加这一行，注意缩进要和上面对齐
