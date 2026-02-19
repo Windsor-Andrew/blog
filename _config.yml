@@ -135,7 +135,3 @@ feed:
   content_limit: 140
   order_by: -date
 
-custom_file_path:
-  style: source/_data/styles.styl
-  languages: source/_data/languages.yml
-  bodyEnd: source/_data/body-end.njk   <-- 增加这一行，注意缩进要和上面对齐

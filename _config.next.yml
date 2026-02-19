@@ -52,6 +52,7 @@ social:
 custom_file_path:
   style: source/_data/styles.styl
   languages: source/_data/languages.yml
+  bodyEnd: source/_data/body-end.njk
 
 local_search:
   enable: true  <-- 关键就是这里改成 true
