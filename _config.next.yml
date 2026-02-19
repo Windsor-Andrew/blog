@@ -209,3 +209,12 @@ lightdark:
   enable: true          # 开启高级模式（推荐）
   # 如果浏览器支持 @supports (color: light-dark(red, red))，会用原生
   # 否则 fallback 到 JS 切换
+
+# Medium Zoom - 像 Medium 一样就地放大图片
+mediumzoom:
+  enable: true
+  # 可选：只在文章页启用（避免首页列表图也放大）
+  enable_on_post: true
+  # 可选参数（默认就好）
+  # delay: 300          # 延迟 ms
+  # background: rgba(0,0,0,0.8)  # 如果想加背景
