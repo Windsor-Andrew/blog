@@ -135,12 +135,13 @@ font:
     family: JetBrains Mono
     size:
 
+# ✅ 正确示范
 codeblock:
-  border_radius: true      # 代码块圆角
-  copy_button:
-    enable: true           # 开启复制按钮 (必开！)
-    show_result: true      # 复制成功后显示 "Copied!"
-    style: mac             # 风格：default | flat | mac
+  border_radius: true
+  copy_button:           # <--- 90% 是漏了这一行，或者缩进没对齐
+    enable: true         # 注意：这里要有两个空格的缩进
+    show_result: true
+    style: mac
 
 creative_commons:
   license: by-nc-sa      # 署名-非商业性使用-相同方式共享 (最常用的博客协议)
@@ -210,12 +211,6 @@ comments:
 
 # Dark Mode
 darkmode: true  # 全局启用 Dark Mode（默认跟随系统偏好）
-
-# 更高级的 Light-Dark Mode（2025+ 新增，支持原生 light-dark() 函数）
-lightdark:
-  enable: true          # 开启高级模式（推荐）
-  # 如果浏览器支持 @supports (color: light-dark(red, red))，会用原生
-  # 否则 fallback 到 JS 切换
 
 # Medium Zoom - 像 Medium 一样就地放大图片
 mediumzoom:
