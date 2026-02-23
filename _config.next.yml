@@ -24,10 +24,10 @@ avatar:
 # ---------------------------------------------------------------
 menu:
   home: / || fa fa-home
-  文章: /archives/ || fa fa-archive
+  archives: /archives/ || fa fa-archive
   categories: /categories/ || fa fa-th
   tags: /tags/ || fa fa-tags
-  图像: /photos/ || fa fa-camera
+  photos: /photos/ || fa fa-camera
   about: /about/ || fa fa-user
 
 # 设置菜单图标
