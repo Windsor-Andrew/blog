@@ -8,10 +8,10 @@ scheme: Gemini
 # ---------------------------------------------------------------
 sidebar:
   position: left
-  display: post
+  display: post       # 只在文章页显示侧边栏
   padding: 18
   offset: 12
-  onmobile: true  
+  onmobile: true      # 手机端是否显示
 
   # 侧边栏上显示的头像
 avatar:
@@ -20,12 +20,12 @@ avatar:
   rotated: false
 
 # ---------------------------------------------------------------
-# 3. 菜单设置 (Menu) - 这里就是你要的“文章列表”！
+# 3. 菜单设置 (Menu)
 # ---------------------------------------------------------------
 menu:
   home: / || fa fa-home
   文章: /archives/ || fa fa-archive
-  categories: /categories/ || fa fa-th   <-- 加上这一行
+  categories: /categories/ || fa fa-th
   tags: /tags/ || fa fa-tags
   图像: /photos/ || fa fa-camera
   about: /about/ || fa fa-user
@@ -36,250 +36,186 @@ menu_settings:
   badges: true
 
 # ---------------------------------------------------------------
-# 4. 社交链接 (Social) - 填补侧边栏下方的空白
+# 4. 社交链接 (Social)
 # ---------------------------------------------------------------
 social:
   Youtube: https://www.youtube.com/@Shawn_Peng196_CN || fab fa-youtube
   E-Mail: mailto:zixaunpeng681@gmail.com || fa fa-envelope
-  # 还可以加:
   Bilibili: https://space.bilibili.com/332737053 || fab fa-bilibili
   Douban: https://www.douban.com/people/202616606 || fa fa-tv
 
 # ---------------------------------------------------------------
-# 5. 背景设置 (Background)
+# 5. 文章与阅读体验设置
 # ---------------------------------------------------------------
-# 启用自定义样式文件 (为了加背景图)
-custom_file_path:
-  style: source/_data/styles.styl
-  languages: source/_data/languages.yml
-  bodyEnd: source/_data/body-end.njk
+# 返回顶部按钮
+back2top:
+  enable: true
+  sidebar: true         # 侧边浮动
+  scrollpercent: true   # 显示百分比
 
-local_search:
-  enable: true  <-- 关键就是这里改成 true
-  # If auto, trigger search by changing input.
-  # If manual, trigger search by pressing enter key or search button.
-  trigger: auto
-  # Show top n results per article, show all results by setting to -1
-  top_n_per_article: 10
-  # Unescape html strings to the readable one.
-  unescape: false
-  # Preload the search data when the page loads.
-  preload: true
+# 目录设置
+toc:
+  enable: true
+  number: true
+  auto_open: true
+  max_depth: 3
 
 # 字数统计 & 阅读时间
 symbols_count_time:
-  separated_meta: true     # 是否换行显示
-  item_text_post: true     # 文章页显示文字 "本文字数"
-  item_text_total: true    # 底部显示全站总字数
-  awl: 4                   # 平均字长 (CN=4, EN=5)
-  wpm: 275                 # 阅读速度
-  suffix: "mins."          # 时间单位
+  separated_meta: true
+  item_text_post: true
+  item_text_total: true
+  awl: 4
+  wpm: 275
+  suffix: "mins."
 
+# 阅读进度条
 reading_progress:
-  enable: true        <-- 改为 true
-  start_at_top: false # true=在最顶端, false=在导航栏下方(推荐 false)
-  color: "#37c6c0"    # 进度条颜色 (你可以改成自己喜欢的，比如 #ff0000)
-  height: 3px         # 进度条高度
+  enable: true
+  start_at_top: false
+  color: "#37c6c0"
+  height: 3px
 
+# 访问量统计
 busuanzi_count:
-  enable: true             <-- 改为 true
-  total_visitors: true     # 显示总访客数 (UV)
+  enable: true
+  total_visitors: true
   total_visitors_icon: fa fa-user
-  total_views: true        # 显示总访问量 (PV)
+  total_views: true
   total_views_icon: fa fa-eye
-  post_views: true         # 在文章标题下显示阅读量
+  post_views: true
   post_views_icon: fa fa-eye
 
-bookmark:
-  enable: true          # 文章书签功能（浏览器本地存储，读者可标记阅读位置）
-
-copycode:
-  enable: true          # 代码块一键复制按钮 + 提示“已复制”
-  show_result: true     # 显示复制成功 toast
-  style: mac            # macOS 风格按钮，更美观
-
-# 标签云设置
-tag_cloud:
-  min: 12      # 最小字号 (文章少的标签)
-  max: 30      # 最大字号 (文章多的标签)
-  start: "#a4d8fa" # 颜色渐变起点 (浅蓝)
-  end: "#0c5b9e"   # 颜色渐变终点 (深蓝)
-  amount: 200  # 最多显示多少个标签
+# ---------------------------------------------------------------
+# 6. 代码块与字体
+# ---------------------------------------------------------------
+codeblock:
+  border_radius: true
+  copy_button:
+    enable: true
+    show_result: true
+    style: mac
 
 font:
   enable: true
-  # 字体库地址 (国内如果访问慢，可以把下面这行改成 host: https://fonts.loli.net)
   host: https://fonts.googleapis.com
-  
-  # 全局字体 (备用)
   global:
     external: true
     family: Noto Sans SC
-    size:
-  
-  # 标题字体 (宋体，更有书卷气)
+    size: 16px
   headings:
     external: true
     family: Noto Serif SC
     size:
-  
-  # 正文字体 (黑体，清晰易读)
   body:
     external: true
     family: Noto Sans SC
     size:
-  
-  # 代码字体 (等宽字体)
   code:
     external: true
     family: JetBrains Mono
     size:
 
-# ✅ 正确示范
-codeblock:
-  border_radius: true
-  copy_button:           # <--- 90% 是漏了这一行，或者缩进没对齐
-    enable: true         # 注意：这里要有两个空格的缩进
-    show_result: true
-    style: mac
+# ---------------------------------------------------------------
+# 7. 第三方服务与功能 (评论、搜索、背景)
+# ---------------------------------------------------------------
+# 自定义文件路径
+custom_file_path:
+  style: source/_data/styles.styl
+  languages: source/_data/languages.yml
+  bodyEnd: source/_data/body-end.njk
 
+# 本地搜索
+local_search:
+  enable: true
+  trigger: auto
+  top_n_per_article: 10
+  unescape: false
+  preload: true
+
+# 评论系统总开关
+comments:
+  active: giscus
+
+# Giscus 评论配置 (已修复缩进)
+giscus:
+  enable: true
+  repo: Windsor-Andrew/blog
+  repo_id: R_kgDORDYTUg
+  category: Announcements
+  category_id: DIC_kwDORDYTUs4C1wm4
+  mapping: pathname
+  reactions_enabled: 1
+  emit_metadata: 0
+  theme: dark
+  lang: zh-CN
+
+# 版权协议
 creative_commons:
-  license: by-nc-sa      # 署名-非商业性使用-相同方式共享 (最常用的博客协议)
-  sidebar: false          # 是否在侧边栏显示 (一般选 false)
-  post: true              # 【关键】开启文章底部的版权声明
-  language: deedu        # 语言默认即可
+  license: by-nc-sa
+  sidebar: false
+  post: true
+  language: deedu
 
+# 数学公式
 math:
   mathjax:
-    enable: true          # 开启 MathJax
-    tags: none            # 默认不给公式自动编号
+    enable: true
+    tags: none
 
+# 网站图标
 favicon:
-  small: /images/favicon.ico     # 浏览器标签页上的小图标 (16x16 或 32x32)
-  medium: /images/favicon.ico    # 收藏夹或移动端显示的中图标 (通常 32x32 以上)
-  apple_touch_icon: /images/favicon.ico # 苹果设备添加到主屏幕时的图标
+  small: /images/favicon.ico
+  medium: /images/favicon.ico
+  apple_touch_icon: /images/favicon.ico
   safari_pinned_tab: /images/favicon.ico
-  # android_manifest: /images/manifest.json # 这个一般不用管，除非你做 PWA
 
+# ---------------------------------------------------------------
+# 8. 底部与杂项
+# ---------------------------------------------------------------
 footer:
-  # 开始年份 (如果填了 2026，到了 2027 年会自动显示 "2026 - 2027")
   since: 2026
-  
-  # 图标 (默认是 user，可以改成爱心 heart)
   icon:
     name: fa fa-heart
-    animated: true      # 让图标像心跳一样跳动
-    color: "#ff0000"    # 红色爱心
-  
-  # 版权信息 (默认显示 Author)
+    animated: true
+    color: "#ff0000"
   copyright: pengzixuan
-  
-  # 是否显示 "Powered by Hexo" (建议 false)
   powered: false
-  
-  # 是否显示 "Theme - NexT" (建议 false)
   theme:
     enable: false
     version: false
 
-# 打赏设置
+# 打赏
 reward_settings:
-  enable: true             # 开启打赏
-  animation: true          # 按钮动画
-  comment: "原创不易，请我不喝咖啡也能扫个码~"  # 打赏下方的文字
+  enable: true
+  animation: true
+  comment: "原创不易，请我不喝咖啡也能扫个码~"
 
 reward:
   wechatpay: /images/wechatpay.png
-  alipay: /images/alipay.png 
+  alipay: /images/alipay.png
 
-
-comments:
-  active: giscus  # 👈 这里改成 giscus
-  # ... 其他的不动
-
-  giscus:
-  enable: true
-  repo: Windsor-Andrew/blog             # 你的用户名/仓库名
-  repo_id: R_kgDORDYTUg                      # 👈 填入刚才获取的 data-repo-id
-  category: Announcements               # 你选的分类名
-  category_id: DIC_kwDORDYTUs4C1wm4                 # 👈 填入刚才获取的 data-category-id
-  mapping: pathname                     # 推荐用 pathname (按文章路径匹配)
-  reactions_enabled: 1                  # 开启表情包互动
-  emit_metadata: 0
-  theme: dark                           # 👈 既然你锁定了深色模式，这里直接填 dark
-  lang: zh-CN                           # 语言设为中文
-
-# Dark Mode
-darkmode: true  # 全局启用 Dark Mode（默认跟随系统偏好）
-
-# Medium Zoom - 像 Medium 一样就地放大图片
+# 图片点击放大
 mediumzoom:
   enable: true
-  # 可选：只在文章页启用（避免首页列表图也放大）
   enable_on_post: true
-  # 可选参数（默认就好）
-  # delay: 300          # 延迟 ms
-  # background: rgba(0,0,0,0.8)  # 如果想加背景
 
-copycode:
-  enable: true          # 代码块一键复制按钮 + 提示“已复制”
-  show_result: true     # 显示复制成功 toast
-  style: mac            # macOS 风格按钮，更美观
-
-back2top:
+# 图片懒加载
+lazyload:
   enable: true
-  sidebar: true         # 侧边浮动“返回顶部”按钮（比只在 footer 好）
-  scrollpercent: true   # 按钮上显示滚动百分比（小细节加分）
+  only_post: true
+  loading_image: /images/loading.gif
 
-sidebar:
-  position: left        # 或 right，根据喜好
-  display: post         # 只在文章页显示侧边栏（首页干净）
-  offset: 12            # 侧边栏与内容间距（像素），调大点更呼吸
-
-menu_settings:
-  badges: true          # 菜单项显示文章/分类/标签数量小徽章（很专业）
-  icons: true           # 确保菜单图标开启（已加 RSS，可继续加其他）
-
-toc:
-  enable: true          # 文章目录（TOC）
-  number: true          # 带编号（1.、1.1.）
-  auto_open: true       # 自动展开当前章节
-  max_depth: 3          # 目录深度，3 层够用不乱
-
+# 社交分享卡片
 open_graph:
-  enable: true          # 开启 Open Graph（微信/微博/X 分享时有好预览图+描述）
+  enable: true
   options:
-    type: blog          # 或 article
-    # 可以加自定义字段，如 twitter:card: summary_large_image
+    type: blog
 
+# Twitter/X 卡片
 twitter:
   enable: true
-  username: shawn_peng196  # 你的 X handle，加了分享卡片更好看
+  username: shawn_peng196
 
-lazyload:
-  enable: true          # 图片懒加载（页面滚动时才加载，首屏更快）
-  only_post: true       # 只在文章页启用（首页列表不懒载，避免闪烁）
-  loading_image: /images/loading.gif  # 自定义占位图（小 spinner 很精致）
-
-cache:
-  enable: true          # 构建缓存，hexo g 更快（开发时省时间）
-
-font:
-  family:
-    global:               # 全局字体微调
-      - "Noto Serif SC"
-      - "Georgia"
-      - serif
-  size: 16px              # 基础字号，中文建议 16-18px
-
-inject:
-  head:                   # 自定义 head 注入（加 favicon、meta 等）
-    - '<link rel="icon" href="/images/favicon-32x32.png" sizes="32x32">'
-  body_end: []            # 加自定义 JS 或统计代码
-
-scheme: Gemini            # 切换 scheme（Gemini/Pisces 对 dark 和细节支持更好，Muse 更文艺）
-
-# 如果你开了 darkmode，再加这个让切换更丝滑
-lightdark:
-  enable: true
-  check_supports: true    # 浏览器原生支持 light-dark() 时用 CSS 变量，性能更好
+# 暗黑模式切换
+darkmode: true
