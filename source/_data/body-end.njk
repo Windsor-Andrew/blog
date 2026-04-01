@@ -12,21 +12,32 @@
   }
 
   /**
-   * 功能 2：Giscus 评论区动态加载 (兼容 Pjax & 加密插件)
+   * 功能 2：Giscus 评论区动态加载 (已增加首页过滤)
    */
   function initGiscus() {
-    // 1. 如果是加密文章且尚未解锁，则不加载评论区防止冲突
+    // --- 新增过滤逻辑 ---
+    // 1. 如果路径是根目录 / 或分页目录 /page/，说明是首页，直接退出
+    if (window.location.pathname === '/' || window.location.pathname.includes('/page/')) {
+      return;
+    }
+    // 2. 如果页面上存在“阅读全文”按钮，说明是文章摘要列表，直接退出
+    if (document.querySelector('.post-button')) {
+      return;
+    }
+    // ------------------
+
+    // 3. 如果是加密文章且尚未解锁，则不加载
     if (document.getElementById('hbe-template')) return;
 
-    // 2. 找到文章容器或评论占位符
+    // 4. 找到文章容器（此时只会在详情页运行）
     const container = document.querySelector('.post-block') || document.querySelector('.comments');
     if (!container) return;
 
-    // 3. 清理已存在的 Giscus (防止 Pjax 切换页面后出现多个评论区)
+    // 5. 防止 Pjax 重复加载
     const oldGiscus = document.querySelector('.giscus-frame');
     if (oldGiscus) oldGiscus.remove();
 
-    // 4. 创建并注入 Giscus 容器
+    // 6. 注入 Giscus
     let gDiv = document.getElementById('giscus-container');
     if (!gDiv) {
       gDiv = document.createElement('div');
@@ -35,7 +46,6 @@
       container.appendChild(gDiv);
     }
 
-    // 5. 注入 Giscus 脚本 (使用你提供的最新 ID)
     const script = document.createElement('script');
     script.src = 'https://giscus.app/client.js';
     script.setAttribute('data-repo', 'Windsor-Andrew/blog');
@@ -54,16 +64,11 @@
     gDiv.appendChild(script);
   }
 
-  /**
-   * 事件监听：同时触发搜索滚动和评论加载
-   */
   function runAllEffects() {
     scrollToSearchKeyword();
     initGiscus();
   }
 
-  // 1. 页面初次加载时执行
   document.addEventListener('DOMContentLoaded', runAllEffects);
-  // 2. Pjax 切换页面后重新触发 (NexT 默认事件)
   document.addEventListener('pjax:success', runAllEffects);
 </script>
