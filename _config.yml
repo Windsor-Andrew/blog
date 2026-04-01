@@ -136,3 +136,12 @@ updated_option: 'mtime'
 # 评论总开关
 comments: true
 meta_generator: true
+
+encrypt:
+  enable: true
+  # 主页展示的摘要文字（也就是你截图中要改的那句话）
+  default_abstract: 🔒 这是一篇加密的私密文章，请点击「阅读全文」并输入密码解锁。
+  # 文章点进去后，密码框上方的提示文字
+  default_message: 请输入密码查看正文内容：
+  # 输错密码时的提示文字
+  default_decryption_error: 密码错误，请重试！
