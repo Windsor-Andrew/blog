@@ -1,26 +1,23 @@
+# ===============================================================
+# NexT 主题配置文件 (_config.next.yml)
+# ===============================================================
+
 # ---------------------------------------------------------------
-# 1. 主题外观 (Scheme)
+# 1. 主题外观与基础体验 (Scheme & Base)
 # ---------------------------------------------------------------
 scheme: Gemini
+darkmode: true          # 开启暗黑模式切换
+
+# Pjax 无刷新加载 (极速切页体验)
+pjax: true
+
+# 页面顶部加载进度条
+pace:
+  enable: true
+  theme: pace-theme-minimal # 极简顶栏风格
 
 # ---------------------------------------------------------------
-# 2. 侧边栏设置 (Sidebar)
-# ---------------------------------------------------------------
-sidebar:
-  position: left
-  display: post       # 只在文章页显示侧边栏
-  padding: 18
-  offset: 12
-  onmobile: true      # 手机端是否显示
-
-  # 侧边栏上显示的头像
-avatar:
-  url: /images/avatar.jpg
-  rounded: true
-  rotated: false
-
-# ---------------------------------------------------------------
-# 3. 菜单设置 (Menu)
+# 2. 菜单与导航设置 (Menu & Navigation)
 # ---------------------------------------------------------------
 menu:
   home: / || fa fa-home
@@ -30,14 +27,25 @@ menu:
   photos: /photos/ || fa fa-camera
   about: /about/ || fa fa-user
 
-# 设置菜单图标
 menu_settings:
   icons: true
-  badges: true
+  badges: true          # 显示分类/标签的数量徽章
 
 # ---------------------------------------------------------------
-# 4. 社交链接 (Social)
+# 3. 侧边栏与个人信息 (Sidebar & Profile)
 # ---------------------------------------------------------------
+sidebar:
+  position: left
+  display: post         # 只在文章页显示侧边栏
+  padding: 18
+  offset: 12
+  onmobile: true
+
+avatar:
+  url: /images/avatar.jpg
+  rounded: true
+  rotated: false
+
 social:
   Youtube: https://www.youtube.com/@Shawn_Peng196_CN || fab fa-youtube
   E-Mail: mailto:zixaunpeng681@gmail.com || fa fa-envelope
@@ -45,22 +53,25 @@ social:
   Douban: https://www.douban.com/people/202616606 || fa fa-tv
 
 # ---------------------------------------------------------------
-# 5. 文章与阅读体验设置
+# 4. 文章与阅读体验 (Post & Reading)
 # ---------------------------------------------------------------
-# 返回顶部按钮
-back2top:
-  enable: true
-  sidebar: true         # 侧边浮动
-  scrollpercent: true   # 显示百分比
-
-# 目录设置
 toc:
   enable: true
   number: true
   auto_open: true
   max_depth: 3
 
-# 字数统计 & 阅读时间
+back2top:
+  enable: true
+  sidebar: true
+  scrollpercent: true
+
+reading_progress:
+  enable: true
+  start_at_top: false
+  color: "#37c6c0"
+  height: 3px
+
 symbols_count_time:
   separated_meta: true
   item_text_post: true
@@ -69,25 +80,30 @@ symbols_count_time:
   wpm: 275
   suffix: "mins."
 
-# 阅读进度条
-reading_progress:
+# 相关文章推荐 (底部展示相似内容的文章)
+related_posts:
   enable: true
-  start_at_top: false
-  color: "#37c6c0"
-  height: 3px
+  title: 推荐阅读
+  display_in_home: false
+  params:
+    maxCount: 5
 
-# 访问量统计
-busuanzi_count:
+creative_commons:
+  license: by-nc-sa
+  sidebar: false
+  post: true
+  language: deedu
+
+reward_settings:
   enable: true
-  total_visitors: true
-  total_visitors_icon: fa fa-user
-  total_views: true
-  total_views_icon: fa fa-eye
-  post_views: true
-  post_views_icon: fa fa-eye
+  animation: true
+  comment: "原创不易，请我不喝咖啡也能扫个码~"
+reward:
+  wechatpay: /images/wechatpay.png
+  alipay: /images/alipay.png
 
 # ---------------------------------------------------------------
-# 6. 代码块与字体
+# 5. 代码、公式与排版优化 (Code & Typography)
 # ---------------------------------------------------------------
 codeblock:
   border_radius: true
@@ -116,16 +132,30 @@ font:
     family: JetBrains Mono
     size:
 
-# ---------------------------------------------------------------
-# 7. 第三方服务与功能 (评论、搜索、背景)
-# ---------------------------------------------------------------
-# 自定义文件路径
-custom_file_path:
-  style: source/_data/styles.styl
-  languages: source/_data/languages.yml
-  bodyEnd: source/_data/body-end.njk
+math:
+  mathjax:
+    enable: true
+    tags: none
 
-# 本地搜索
+# 开启内置的 Note 提示块功能 (写技术文档必备)
+note:
+  enable: true
+  style: flat
+  icons: true
+  border_radius: 4
+
+# ---------------------------------------------------------------
+# 6. 第三方功能与统计 (3rd Party & Analytics)
+# ---------------------------------------------------------------
+busuanzi_count:
+  enable: true
+  total_visitors: true
+  total_visitors_icon: fa fa-user
+  total_views: true
+  total_views_icon: fa fa-eye
+  post_views: true
+  post_views_icon: fa fa-eye
+
 local_search:
   enable: true
   trigger: auto
@@ -133,11 +163,21 @@ local_search:
   unescape: false
   preload: true
 
-# 评论系统总开关
+mediumzoom:
+  enable: true
+  enable_on_post: true
+
+lazyload:
+  enable: true
+  only_post: true
+  loading_image: /images/loading.gif
+
+# ---------------------------------------------------------------
+# 7. 评论系统 (Comments)
+# ---------------------------------------------------------------
 comments:
   active: giscus
 
-# Giscus 评论配置 (已修复缩进)
 giscus:
   enable: true
   repo: Windsor-Andrew/blog
@@ -150,28 +190,8 @@ giscus:
   theme: dark
   lang: zh-CN
 
-# 版权协议
-creative_commons:
-  license: by-nc-sa
-  sidebar: false
-  post: true
-  language: deedu
-
-# 数学公式
-math:
-  mathjax:
-    enable: true
-    tags: none
-
-# 网站图标
-favicon:
-  small: /images/favicon.ico
-  medium: /images/favicon.ico
-  apple_touch_icon: /images/favicon.ico
-  safari_pinned_tab: /images/favicon.ico
-
 # ---------------------------------------------------------------
-# 8. 底部与杂项
+# 8. 底部、分享与高级自定义注入 (Footer & Custom Inject)
 # ---------------------------------------------------------------
 footer:
   since: 2026
@@ -185,37 +205,23 @@ footer:
     enable: false
     version: false
 
-# 打赏
-reward_settings:
-  enable: true
-  animation: true
-  comment: "原创不易，请我不喝咖啡也能扫个码~"
+favicon:
+  small: /images/favicon.ico
+  medium: /images/favicon.ico
+  apple_touch_icon: /images/favicon.ico
+  safari_pinned_tab: /images/favicon.ico
 
-reward:
-  wechatpay: /images/wechatpay.png
-  alipay: /images/alipay.png
-
-# 图片点击放大
-mediumzoom:
-  enable: true
-  enable_on_post: true
-
-# 图片懒加载
-lazyload:
-  enable: true
-  only_post: true
-  loading_image: /images/loading.gif
-
-# 社交分享卡片
 open_graph:
   enable: true
   options:
     type: blog
 
-# Twitter/X 卡片
 twitter:
   enable: true
   username: shawn_peng196
 
-# 暗黑模式切换
-darkmode: true
+custom_file_path:
+  style: source/_data/styles.styl
+  languages: source/_data/languages.yml
+  bodyEnd: source/_data/body-end.njk
+  sidebar: source/_data/sidebar.njk   # <-- 已为你开启侧边栏自定义注入入口
