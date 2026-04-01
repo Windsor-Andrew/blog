@@ -12,24 +12,28 @@
   }
 
   /**
-   * 功能 2：Giscus 评论区动态加载 (已增加首页过滤)
+   * 功能 2：Giscus 评论区动态加载 (精准过滤非文章页面)
    */
   function initGiscus() {
-    // --- 新增过滤逻辑 ---
-    // 1. 如果路径是根目录 / 或分页目录 /page/，说明是首页，直接退出
-    if (window.location.pathname === '/' || window.location.pathname.includes('/page/')) {
+    const path = window.location.pathname;
+
+    // --- 严苛的过滤逻辑：以下页面绝对不加载评论 ---
+    const isHome = path === '/' || path.startsWith('/page/');
+    const isArchive = path.startsWith('/archives/');
+    const isCategory = path.startsWith('/categories/');
+    const isTag = path.startsWith('/tags/');
+    
+    // 如果符合上述任一条件，或者是列表页（带有阅读全文按钮），则直接退出
+    if (isHome || isArchive || isCategory || isTag || document.querySelector('.post-button')) {
+      console.log('⚡️ 当前为列表/归档页，跳过评论区加载');
       return;
     }
-    // 2. 如果页面上存在“阅读全文”按钮，说明是文章摘要列表，直接退出
-    if (document.querySelector('.post-button')) {
-      return;
-    }
-    // ------------------
+    // ------------------------------------------
 
     // 3. 如果是加密文章且尚未解锁，则不加载
     if (document.getElementById('hbe-template')) return;
 
-    // 4. 找到文章容器（此时只会在详情页运行）
+    // 4. 找到文章详情页特有的容器
     const container = document.querySelector('.post-block') || document.querySelector('.comments');
     if (!container) return;
 
