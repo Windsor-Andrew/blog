@@ -1,117 +1,135 @@
 // ==================================================
-// 1. 全局背景图设置 (你原来的代码)
+// Hexo NexT 自定义样式表 (styles.styl)
+// ==================================================
+
+// ==================================================
+// 1. 全局背景与基础设定 (合并重构)
 // ==================================================
 body {
-    background: url(/images/back.jpg);
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    background-position: center;
+  background: url(/images/back.jpg) no-repeat fixed center;
+  background-size: cover;
+  background-color: #222 !important; /* 强制底色防白屏 */
+  color: #eee !important;
+}
+
+// 沉浸式文本选中颜色
+::selection {
+  background: rgba(55, 198, 192, 0.5); /* 柔和的主题色 */
+  color: #fff;
 }
 
 // ==================================================
-// 2. 圆角美化设置 (新增的代码)
+// 2. 极致圆角美化 (Rounded Corners)
 // ==================================================
-
-// 顶部标题栏 (左侧) - 上圆下直
 .site-brand-container {
-  border-radius: 20px 20px 0 0;
+  border-radius: 20px 20px 0 0; // 顶部标题栏: 上圆下直
 }
 
-// 侧边栏主体 (左侧) - 上直下圆
 .sidebar-inner {
-  border-radius: 0 0 20px 20px;
+  border-radius: 0 0 20px 20px; // 侧边栏主体: 上直下圆
 }
 
-// 文章卡片 (右侧) - 四周圆角
-.post-block {
-  border-radius: 20px;
-}
-
-// 评论区 (如果有)
+.post-block,
 .comments {
-  border-radius: 20px;
+  border-radius: 20px;          // 文章与评论区: 四周圆角
 }
 
-// 分页按钮
 .pagination {
   border-radius: 20px;
-  background: var(--card-bg-color); // 保持和卡片一致的背景
+  background: rgba(34, 34, 34, 0.8) !important;
   padding: 10px;
 }
 
 // ==================================================
-//  毛玻璃透明特效 (让背景图透出来)
+// 3. 赛博毛玻璃透明特效 (Glassmorphism)
 // ==================================================
-
-// 1. 设置侧边栏 (左侧信息栏) 的透明度
-.sidebar-inner {
-  // rgba(34, 34, 34, 0.7) 意思就是：深灰色，70% 不透明度
-  background: rgba(34, 34, 34, 0.8) !important;
-  // 这一行是灵魂：增加“磨砂玻璃”模糊效果
-  backdrop-filter: blur(10px); 
-}
-
-// 2. 设置右侧文章主体区域的透明度
-.content-wrap, .post-block {
-  background: rgba(34, 34, 34, 0.8) !important;
-  backdrop-filter: blur(10px);
-}
-
-// 3. (可选) 如果有顶部菜单栏，也一起变透明
+.sidebar-inner, 
+.content-wrap, 
+.post-block, 
 .header-inner {
-  background: rgba(34, 34, 34, 0.8) !important;
-  backdrop-filter: blur(10px);
+  background: rgba(34, 34, 34, 0.7) !important; /* 深灰色, 70% 不透明度 */
+  backdrop-filter: blur(10px);                  /* 灵魂: 磨砂玻璃模糊效果 */
+  -webkit-backdrop-filter: blur(10px);          /* Safari 兼容 */
 }
 
-// 4. (可选) 让文章里的代码块背景也稍微深一点，避免混淆
+// 让文章里的代码块背景稍微深一点，增加层级感
 .highlight {
   background: rgba(0, 0, 0, 0.6) !important;
 }
 
 // ==================================================
-//  强制锁定深色模式 (Force Dark Mode)
-//  让网站无视系统亮色设置，永远保持暗黑风格
+// 4. 强制锁定深色模式 (Force Dark Mode)
 // ==================================================
-
 :root {
-  // 1. 强制定义全局变量为“深色版”
-  --body-bg-color: #222 !important;        /* 网页整体背景：深灰 */
-  --content-bg-color: #333 !important;     /* 文章背景色：深灰 */
+  --body-bg-color: #222 !important;        /* 网页整体背景 */
+  --content-bg-color: #333 !important;     /* 文章背景色 */
   --card-bg-color: #555 !important;        /* 卡片背景 */
-  --text-color: #eee !important;           /* 正文文字：浅灰白 */
+  --text-color: #eee !important;           /* 正文文字 */
   --blockquote-color: #ccc !important;     /* 引用文字颜色 */
   --link-color: #e1e1e1 !important;        /* 链接颜色 */
-  --link-hover-color: #ff0000 !important;  /* 链接悬停颜色 */
-  
-  // 2. 修正侧边栏文字颜色
-  --menu-item-bg-color: rgba(0,0,0,0) !important;
+  --link-hover-color: #37c6c0 !important;  /* 链接悬停颜色 */
+  --menu-item-bg-color: transparent !important; /* 侧边栏文字背景防白块 */
 }
 
-// 3. 强制背景变黑 (防止浅色模式下背景变白)
-body {
-  background-color: #222 !important;
-  color: #eee !important;
-}
-
-// 4. 确保之前的“磨砂玻璃”效果在浅色模式下依然是黑色的
-.sidebar-inner, .content-wrap, .post-block, .header-inner {
-  // 这里的颜色必须是深色 rgba，否则浅色模式下会变成半透明白色
-  background: rgba(34, 34, 34, 0.7) !important; 
-}
-
-// 5. 修复浅色模式下文章标题变黑的问题
+// 修复浅色模式下文章标题变黑的问题
 .posts-expand .post-title-link {
   color: #fff !important;
 }
 
 // ==================================================
-//  自定义搜索结果的关键词高亮颜色
+// 5. 搜索高亮与过渡动画优化 (Search & Animations)
 // ==================================================
-
 mark.search-keyword {
   background: #ffe300 !important;  /* 抢眼的亮黄色背景 */
-  color: #000000 !important;       /* 强制文字变成纯黑色，保证对比度 */
-  font-weight: bold !important;    /* 字体加粗，让它更醒目 */
-  border-radius: 4px;              /* 给高亮色块加一点圆角，更好看 */
+  color: #000 !important;          /* 强制文字纯黑，保证对比度 */
+  font-weight: bold !important;
+  border-radius: 4px;
+}
+
+// 强制缩短 NexT 入场动画 (配合 Pjax 极速响应)
+.use-motion .post-block,
+.use-motion .pagination,
+.use-motion .comments,
+.use-motion .sidebar {
+  animation-duration: 0.25s !important; 
+}
+
+// 加速全局鼠标悬停渐变反应
+*, *:before, *:after {
+  transition-duration: 0.15s !important;
+}
+
+// ==================================================
+// 6. 极简滚动条定制 (Custom Scrollbar)
+// ==================================================
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #37c6c0;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+// ==================================================
+// 7. 第三方组件透明度适配 (APlayer 等)
+// ==================================================
+.aplayer {
+  background: rgba(0, 0, 0, 0.2) !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+  color: #eee !important;
+}
+.aplayer .aplayer-list ol li:hover,
+.aplayer .aplayer-list ol li.aplayer-list-light {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+.aplayer .aplayer-info .aplayer-controller .aplayer-time {
+  color: #ccc !important;
 }

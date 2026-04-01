@@ -15,7 +15,7 @@ pace:
   theme: pace-theme-minimal 
 
 motion:
-  enable: false         # 关闭入场浮现动画，配合 Pjax 实现文字瞬间加载
+  enable: true          # 开启入场浮现动画
 
 # ---------------------------------------------------------------
 # 2. 菜单与导航设置 (Menu & Navigation)
