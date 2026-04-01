@@ -137,6 +137,9 @@ updated_option: 'mtime'
 comments: true
 meta_generator: true
 
+plugins:
+  - hexo-blog-encrypt
+
 encrypt:
   enable: true
   # 主页展示的摘要文字（也就是你截图中要改的那句话）
