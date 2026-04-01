@@ -225,3 +225,9 @@ custom_file_path:
   languages: source/_data/languages.yml
   bodyEnd: source/_data/body-end.njk
   sidebar: source/_data/sidebar.njk   # <-- 已为你开启侧边栏自定义注入入口
+
+# ---------------------------------------------------------------
+# 10. 动画与转场效果 (Motion)
+# ---------------------------------------------------------------
+motion:
+  enable: false  # 👈 这里填 false，文字和图片会瞬间加载，不再慢吞吞地浮现
