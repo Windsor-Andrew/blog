@@ -12,7 +12,7 @@ pjax: true              # Pjax 无刷新加载 (极速切页体验)
 
 pace:
   enable: true          # 页面顶部加载进度条
-  theme: pace-theme-minimal 
+  theme: minimal 
 
 motion:
   enable: true          # 开启入场浮现动画
@@ -102,7 +102,7 @@ creative_commons:
 reward_settings:
   enable: true
   animation: true
-  comment: "原创不易，请我不喝咖啡也能扫个码~"
+
 reward:
   wechatpay: /images/wechatpay.png
   alipay: /images/alipay.png

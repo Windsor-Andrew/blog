@@ -1,19 +1,69 @@
 <script>
+  /**
+   * 功能 1：搜索关键词自动平滑滚动
+   */
   function scrollToSearchKeyword() {
-    // 设置 500 毫秒的延迟，等待页面的图片和布局加载完毕，防止滚动位置计算错误
     setTimeout(function() {
-      // NexT 主题会把搜索关键词用 <mark class="search-keyword"> 包裹起来
       var keyword = document.querySelector('mark.search-keyword');
       if (keyword) {
-        // 核心代码：平滑滚动到该元素，并且让它显示在屏幕正中间 (center)
         keyword.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
     }, 500);
   }
 
-  // 当正常页面加载完成时执行
-  window.addEventListener('DOMContentLoaded', scrollToSearchKeyword);
-  
-  // 兼容 Pjax（预防如果你未来开启了页面无刷新加载模式）
-  document.addEventListener('pjax:success', scrollToSearchKeyword);
+  /**
+   * 功能 2：Giscus 评论区动态加载 (兼容 Pjax & 加密插件)
+   */
+  function initGiscus() {
+    // 1. 如果是加密文章且尚未解锁，则不加载评论区防止冲突
+    if (document.getElementById('hbe-template')) return;
+
+    // 2. 找到文章容器或评论占位符
+    const container = document.querySelector('.post-block') || document.querySelector('.comments');
+    if (!container) return;
+
+    // 3. 清理已存在的 Giscus (防止 Pjax 切换页面后出现多个评论区)
+    const oldGiscus = document.querySelector('.giscus-frame');
+    if (oldGiscus) oldGiscus.remove();
+
+    // 4. 创建并注入 Giscus 容器
+    let gDiv = document.getElementById('giscus-container');
+    if (!gDiv) {
+      gDiv = document.createElement('div');
+      gDiv.id = 'giscus-container';
+      gDiv.style.marginTop = '40px';
+      container.appendChild(gDiv);
+    }
+
+    // 5. 注入 Giscus 脚本 (使用你提供的最新 ID)
+    const script = document.createElement('script');
+    script.src = 'https://giscus.app/client.js';
+    script.setAttribute('data-repo', 'Windsor-Andrew/blog');
+    script.setAttribute('data-repo-id', 'R_kgDORDYTUg');
+    script.setAttribute('data-category', 'Announcements');
+    script.setAttribute('data-category-id', 'DIC_kwDORDYTUs4C1wm4');
+    script.setAttribute('data-mapping', 'pathname');
+    script.setAttribute('data-strict', '0');
+    script.setAttribute('data-reactions-enabled', '1');
+    script.setAttribute('data-emit-metadata', '0');
+    script.setAttribute('data-input-position', 'bottom');
+    script.setAttribute('data-theme', 'dark');
+    script.setAttribute('data-lang', 'zh-CN');
+    script.crossOrigin = 'anonymous';
+    script.async = true;
+    gDiv.appendChild(script);
+  }
+
+  /**
+   * 事件监听：同时触发搜索滚动和评论加载
+   */
+  function runAllEffects() {
+    scrollToSearchKeyword();
+    initGiscus();
+  }
+
+  // 1. 页面初次加载时执行
+  document.addEventListener('DOMContentLoaded', runAllEffects);
+  // 2. Pjax 切换页面后重新触发 (NexT 默认事件)
+  document.addEventListener('pjax:success', runAllEffects);
 </script>
