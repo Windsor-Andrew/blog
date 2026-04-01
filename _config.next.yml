@@ -3,18 +3,19 @@
 # ===============================================================
 
 # ---------------------------------------------------------------
-# 1. 主题外观与基础体验 (Scheme & Base)
+# 1. 主题外观、动画与基础体验 (Scheme & Base)
 # ---------------------------------------------------------------
 scheme: Gemini
 darkmode: true          # 开启暗黑模式切换
 
-# Pjax 无刷新加载 (极速切页体验)
-pjax: true
+pjax: true              # Pjax 无刷新加载 (极速切页体验)
 
-# 页面顶部加载进度条
 pace:
-  enable: true
-  theme: pace-theme-minimal # 极简顶栏风格
+  enable: true          # 页面顶部加载进度条
+  theme: pace-theme-minimal 
+
+motion:
+  enable: false         # 关闭入场浮现动画，配合 Pjax 实现文字瞬间加载
 
 # ---------------------------------------------------------------
 # 2. 菜单与导航设置 (Menu & Navigation)
@@ -80,8 +81,12 @@ symbols_count_time:
   wpm: 275
   suffix: "mins."
 
-# 相关文章推荐 (底部展示相似内容的文章)
-related_posts:
+bookmark:               # 开启阅读书签记忆功能 (长文必备)
+  enable: true
+  color: "#37c6c0"
+  save: auto
+
+related_posts:          # 相关文章推荐 (底部展示)
   enable: true
   title: 推荐阅读
   display_in_home: false
@@ -111,6 +116,9 @@ codeblock:
     enable: true
     show_result: true
     style: mac
+  fold:                 # 开启长代码自动折叠
+    enable: true
+    height: 500
 
 font:
   enable: true
@@ -137,8 +145,7 @@ math:
     enable: true
     tags: none
 
-# 开启内置的 Note 提示块功能 (写技术文档必备)
-note:
+note:                   # 开启内置的 Note 提示块功能
   enable: true
   style: flat
   icons: true
@@ -211,6 +218,11 @@ favicon:
   apple_touch_icon: /images/favicon.ico
   safari_pinned_tab: /images/favicon.ico
 
+github_banner:          # 网页右上角的 GitHub 挂件
+  enable: true
+  permalink: https://github.com/Windsor-Andrew
+  title: Follow me on GitHub
+
 open_graph:
   enable: true
   options:
@@ -224,10 +236,4 @@ custom_file_path:
   style: source/_data/styles.styl
   languages: source/_data/languages.yml
   bodyEnd: source/_data/body-end.njk
-  sidebar: source/_data/sidebar.njk   # <-- 已为你开启侧边栏自定义注入入口
-
-# ---------------------------------------------------------------
-# 10. 动画与转场效果 (Motion)
-# ---------------------------------------------------------------
-motion:
-  enable: false  # 👈 这里填 false，文字和图片会瞬间加载，不再慢吞吞地浮现
+  sidebar: source/_data/sidebar.njk
