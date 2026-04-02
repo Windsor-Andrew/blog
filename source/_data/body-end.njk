@@ -1,14 +1,27 @@
 <script>
   /**
-   * 功能 1：搜索关键词自动平滑滚动
+   * 功能 1：搜索关键词自动平滑滚动 (加入智能重试机制)
    */
   function scrollToSearchKeyword() {
-    setTimeout(function() {
+    let attempts = 0;
+    const maxAttempts = 10; // 最多尝试 10 次 (约 2 秒)
+
+    function checkAndScroll() {
+      // 寻找 NexT 搜索脚本生成的高亮标签
       var keyword = document.querySelector('mark.search-keyword');
+      
       if (keyword) {
+        // 找到了，执行平滑滚动并居中
         keyword.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } else if (attempts < maxAttempts) {
+        // 没找到且次数没用完，等 200ms 后再试一次
+        attempts++;
+        setTimeout(checkAndScroll, 200);
       }
-    }, 500);
+    }
+
+    // 初次延迟 300ms 后开始探测
+    setTimeout(checkAndScroll, 300);
   }
 
   /**
