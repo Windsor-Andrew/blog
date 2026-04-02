@@ -1,90 +1,96 @@
-<script>
-  /**
-   * 功能 1：高能搜索关键词自动定位 (Pjax + Motion 兼容版)
-   */
-  function scrollToSearchKeyword() {
-    // 只有路径里包含文章内容时才执行，排除首页
-    if (window.location.pathname === '/' || document.querySelector('.post-button')) return;
+<script data-pjax>
+  // 注意 <script> 标签里加了 data-pjax，这是破局的关键！
+  (function() {
+    console.log('🚀 Pjax/页面已加载，开始执行脚本调度...');
 
-    let retryTimes = 0;
-    const maxRetry = 15; // 最多等 3 秒
+    /**
+     * 功能 1：高能搜索关键词自动定位 (MutationObserver 终极防劫持版)
+     */
+    function scrollToSearchKeyword() {
+      // 过滤非文章页
+      if (window.location.pathname === '/' || document.querySelector('.post-button')) return;
 
-    function checkAndScroll() {
-      const keyword = document.querySelector('mark.search-keyword');
-      
-      if (keyword) {
-        // --- 核心修改：增加 800ms 延迟 ---
-        // 这一步是为了死等 NexT 的 Motion (入场动画) 播完
-        // 否则动画过程中的坐标计算永远是错的
+      // 执行滚动的核心动作
+      function doScroll(keyword) {
+        // 给 Pjax 原生置顶逻辑 500ms 的面子，等它闹完我们再切入
         setTimeout(() => {
           const rect = keyword.getBoundingClientRect();
-          const targetY = rect.top + window.pageYOffset - (window.innerHeight / 3);
-          
-          window.scrollTo({
-            top: targetY,
-            behavior: 'smooth'
-          });
-          console.log('🎯 搜索定位：动画结束，已精准跳转');
-        }, 800); 
-      } else if (retryTimes < maxRetry) {
-        retryTimes++;
-        setTimeout(checkAndScroll, 200);
+          const targetY = rect.top + window.scrollY - (window.innerHeight / 3);
+          window.scrollTo({ top: targetY, behavior: 'smooth' });
+          console.log('🎯 搜索定位：已精准跳转至关键词！');
+        }, 500); 
       }
+
+      // 1. 先看一眼，如果高亮词已经存在（比如刷新页面时），直接滚
+      const existingKeyword = document.querySelector('mark.search-keyword');
+      if (existingKeyword) {
+        doScroll(existingKeyword);
+        return;
+      }
+
+      // 2. 如果还没出来（Pjax 跳转时），派间谍盯着正文区域
+      const article = document.querySelector('.post-block');
+      if (!article) return;
+
+      const observer = new MutationObserver((mutations, obs) => {
+        const kw = document.querySelector('mark.search-keyword');
+        if (kw) {
+          obs.disconnect(); // 抓到目标，立刻撤回间谍
+          doScroll(kw);
+        }
+      });
+
+      // 只要文章里的代码有一丝风吹草动，间谍就会发现
+      observer.observe(article, { childList: true, subtree: true });
+
+      // 3 秒后如果还没人高亮，说明根本不是从搜索进来的，解散间谍节省性能
+      setTimeout(() => observer.disconnect(), 3000);
     }
 
-    // Pjax 跳转后，给系统一点点启动时间
-    setTimeout(checkAndScroll, 500);
-  }
+    /**
+     * 功能 2：Giscus 评论区动态加载 (完美适配 Pjax)
+     */
+    function initGiscus() {
+      const path = window.location.pathname;
+      const isList = path === '/' || path.startsWith('/page/') || path.startsWith('/archives/') || 
+                     path.startsWith('/categories/') || path.startsWith('/tags/') || 
+                     document.querySelector('.post-button');
+      
+      if (isList || document.getElementById('hbe-template')) return;
 
-  /**
-   * 功能 2：Giscus 评论区动态加载 (列表页过滤)
-   */
-  function initGiscus() {
-    const path = window.location.pathname;
-    const isList = path === '/' || path.startsWith('/page/') || path.startsWith('/archives/') || 
-                   path.startsWith('/categories/') || path.startsWith('/tags/') || 
-                   document.querySelector('.post-button');
-    
-    if (isList || document.getElementById('hbe-template')) return;
+      const container = document.querySelector('.post-block') || document.querySelector('.comments');
+      if (!container) return;
 
-    const container = document.querySelector('.post-block') || document.querySelector('.comments');
-    if (!container) return;
+      // Pjax 切页时，先把上个页面的残影评论区删掉
+      const oldFrame = document.querySelector('.giscus-frame');
+      if (oldFrame) oldFrame.remove();
 
-    // 防止 Pjax 导致的重影
-    if (document.querySelector('.giscus-frame')) {
-      document.querySelector('.giscus-frame').remove();
+      let gDiv = document.getElementById('giscus-container');
+      if (!gDiv) {
+        gDiv = document.createElement('div');
+        gDiv.id = 'giscus-container';
+        gDiv.style.marginTop = '40px';
+        container.appendChild(gDiv);
+      }
+
+      const script = document.createElement('script');
+      script.src = 'https://giscus.app/client.js';
+      script.setAttribute('data-repo', 'Windsor-Andrew/blog');
+      script.setAttribute('data-repo-id', 'R_kgDORDYTUg');
+      script.setAttribute('data-category', 'Announcements');
+      script.setAttribute('data-category-id', 'DIC_kwDORDYTUs4C1wm4');
+      script.setAttribute('data-mapping', 'pathname');
+      script.setAttribute('data-reactions-enabled', '1');
+      script.setAttribute('data-theme', 'dark');
+      script.setAttribute('data-lang', 'zh-CN');
+      script.crossOrigin = 'anonymous';
+      script.async = true;
+      gDiv.appendChild(script);
     }
 
-    let gDiv = document.getElementById('giscus-container');
-    if (!gDiv) {
-      gDiv = document.createElement('div');
-      gDiv.id = 'giscus-container';
-      gDiv.style.marginTop = '40px';
-      container.appendChild(gDiv);
-    }
-
-    const script = document.createElement('script');
-    script.src = 'https://giscus.app/client.js';
-    script.setAttribute('data-repo', 'Windsor-Andrew/blog');
-    script.setAttribute('data-repo-id', 'R_kgDORDYTUg');
-    script.setAttribute('data-category', 'Announcements');
-    script.setAttribute('data-category-id', 'DIC_kwDORDYTUs4C1wm4');
-    script.setAttribute('data-mapping', 'pathname');
-    script.setAttribute('data-reactions-enabled', '1');
-    script.setAttribute('data-theme', 'dark');
-    script.setAttribute('data-lang', 'zh-CN');
-    script.crossOrigin = 'anonymous';
-    script.async = true;
-    gDiv.appendChild(script);
-  }
-
-  function runAllEffects() {
+    // 立即执行两个功能
     scrollToSearchKeyword();
     initGiscus();
-  }
 
-  // 监听初次加载
-  document.addEventListener('DOMContentLoaded', runAllEffects);
-  // 关键：监听 Pjax 完成事件
-  document.addEventListener('pjax:success', runAllEffects);
+  })(); // 采用 IIFE (立即执行函数) 闭包封装，防止变量污染
 </script>
