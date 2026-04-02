@@ -237,3 +237,7 @@ custom_file_path:
   languages: source/_data/languages.yml
   bodyEnd: source/_data/body-end.njk
   sidebar: source/_data/sidebar.njk
+
+google_analytics:
+  tracking_id: G-WGYWR2SYTJ  # 填入你刚才复制的 ID
+  only_pageview: false       # 改为 false，收集更全面的数据
