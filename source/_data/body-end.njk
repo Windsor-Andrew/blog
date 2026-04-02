@@ -1,61 +1,59 @@
 <script>
   /**
-   * 功能 1：高能搜索关键词自动定位 (防动画冲突版)
+   * 功能 1：高能搜索关键词自动定位 (Pjax + Motion 兼容版)
    */
   function scrollToSearchKeyword() {
-    // 如果是首页或列表页，不需要找关键词
-    if (document.querySelector('.post-button')) return;
+    // 只有路径里包含文章内容时才执行，排除首页
+    if (window.location.pathname === '/' || document.querySelector('.post-button')) return;
 
-    let attempts = 0;
-    const maxAttempts = 15; // 最多尝试 15 次 (3 秒)
+    let retryTimes = 0;
+    const maxRetry = 15; // 最多等 3 秒
 
     function checkAndScroll() {
       const keyword = document.querySelector('mark.search-keyword');
       
       if (keyword) {
-        // 找到高亮词后，强制再等 300ms，确保主题的浮现动画彻底结束！
+        // --- 核心修改：增加 800ms 延迟 ---
+        // 这一步是为了死等 NexT 的 Motion (入场动画) 播完
+        // 否则动画过程中的坐标计算永远是错的
         setTimeout(() => {
-          // 精准计算元素的绝对坐标，并减去屏幕三分之一的高度，让它完美居中
-          const targetY = keyword.getBoundingClientRect().top + window.scrollY - (window.innerHeight / 3);
+          const rect = keyword.getBoundingClientRect();
+          const targetY = rect.top + window.pageYOffset - (window.innerHeight / 3);
           
           window.scrollTo({
             top: targetY,
             behavior: 'smooth'
           });
-          console.log('🎯 已精准锁定搜索关键词坐标并滚动！');
-        }, 300);
-      } else if (attempts < maxAttempts) {
-        attempts++;
-        setTimeout(checkAndScroll, 200); // 找不到就一直找，直到 3 秒超时
+          console.log('🎯 搜索定位：动画结束，已精准跳转');
+        }, 800); 
+      } else if (retryTimes < maxRetry) {
+        retryTimes++;
+        setTimeout(checkAndScroll, 200);
       }
     }
 
-    // 页面刚加载时比较混乱，强行延后 600ms 再开始执行探测
-    setTimeout(checkAndScroll, 600);
+    // Pjax 跳转后，给系统一点点启动时间
+    setTimeout(checkAndScroll, 500);
   }
 
   /**
-   * 功能 2：Giscus 评论区动态加载 (精准过滤非文章页面)
+   * 功能 2：Giscus 评论区动态加载 (列表页过滤)
    */
   function initGiscus() {
     const path = window.location.pathname;
-
-    const isHome = path === '/' || path.startsWith('/page/');
-    const isArchive = path.startsWith('/archives/');
-    const isCategory = path.startsWith('/categories/');
-    const isTag = path.startsWith('/tags/');
+    const isList = path === '/' || path.startsWith('/page/') || path.startsWith('/archives/') || 
+                   path.startsWith('/categories/') || path.startsWith('/tags/') || 
+                   document.querySelector('.post-button');
     
-    if (isHome || isArchive || isCategory || isTag || document.querySelector('.post-button')) {
-      return;
-    }
-
-    if (document.getElementById('hbe-template')) return;
+    if (isList || document.getElementById('hbe-template')) return;
 
     const container = document.querySelector('.post-block') || document.querySelector('.comments');
     if (!container) return;
 
-    const oldGiscus = document.querySelector('.giscus-frame');
-    if (oldGiscus) oldGiscus.remove();
+    // 防止 Pjax 导致的重影
+    if (document.querySelector('.giscus-frame')) {
+      document.querySelector('.giscus-frame').remove();
+    }
 
     let gDiv = document.getElementById('giscus-container');
     if (!gDiv) {
@@ -72,10 +70,7 @@
     script.setAttribute('data-category', 'Announcements');
     script.setAttribute('data-category-id', 'DIC_kwDORDYTUs4C1wm4');
     script.setAttribute('data-mapping', 'pathname');
-    script.setAttribute('data-strict', '0');
     script.setAttribute('data-reactions-enabled', '1');
-    script.setAttribute('data-emit-metadata', '0');
-    script.setAttribute('data-input-position', 'bottom');
     script.setAttribute('data-theme', 'dark');
     script.setAttribute('data-lang', 'zh-CN');
     script.crossOrigin = 'anonymous';
@@ -88,6 +83,8 @@
     initGiscus();
   }
 
+  // 监听初次加载
   document.addEventListener('DOMContentLoaded', runAllEffects);
+  // 关键：监听 Pjax 完成事件
   document.addEventListener('pjax:success', runAllEffects);
 </script>
