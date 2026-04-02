@@ -1,27 +1,37 @@
 <script>
   /**
-   * 功能 1：搜索关键词自动平滑滚动 (加入智能重试机制)
+   * 功能 1：高能搜索关键词自动定位 (防动画冲突版)
    */
   function scrollToSearchKeyword() {
+    // 如果是首页或列表页，不需要找关键词
+    if (document.querySelector('.post-button')) return;
+
     let attempts = 0;
-    const maxAttempts = 10; // 最多尝试 10 次 (约 2 秒)
+    const maxAttempts = 15; // 最多尝试 15 次 (3 秒)
 
     function checkAndScroll() {
-      // 寻找 NexT 搜索脚本生成的高亮标签
-      var keyword = document.querySelector('mark.search-keyword');
+      const keyword = document.querySelector('mark.search-keyword');
       
       if (keyword) {
-        // 找到了，执行平滑滚动并居中
-        keyword.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        // 找到高亮词后，强制再等 300ms，确保主题的浮现动画彻底结束！
+        setTimeout(() => {
+          // 精准计算元素的绝对坐标，并减去屏幕三分之一的高度，让它完美居中
+          const targetY = keyword.getBoundingClientRect().top + window.scrollY - (window.innerHeight / 3);
+          
+          window.scrollTo({
+            top: targetY,
+            behavior: 'smooth'
+          });
+          console.log('🎯 已精准锁定搜索关键词坐标并滚动！');
+        }, 300);
       } else if (attempts < maxAttempts) {
-        // 没找到且次数没用完，等 200ms 后再试一次
         attempts++;
-        setTimeout(checkAndScroll, 200);
+        setTimeout(checkAndScroll, 200); // 找不到就一直找，直到 3 秒超时
       }
     }
 
-    // 初次延迟 300ms 后开始探测
-    setTimeout(checkAndScroll, 300);
+    // 页面刚加载时比较混乱，强行延后 600ms 再开始执行探测
+    setTimeout(checkAndScroll, 600);
   }
 
   /**
@@ -30,31 +40,23 @@
   function initGiscus() {
     const path = window.location.pathname;
 
-    // --- 严苛的过滤逻辑：以下页面绝对不加载评论 ---
     const isHome = path === '/' || path.startsWith('/page/');
     const isArchive = path.startsWith('/archives/');
     const isCategory = path.startsWith('/categories/');
     const isTag = path.startsWith('/tags/');
     
-    // 如果符合上述任一条件，或者是列表页（带有阅读全文按钮），则直接退出
     if (isHome || isArchive || isCategory || isTag || document.querySelector('.post-button')) {
-      console.log('⚡️ 当前为列表/归档页，跳过评论区加载');
       return;
     }
-    // ------------------------------------------
 
-    // 3. 如果是加密文章且尚未解锁，则不加载
     if (document.getElementById('hbe-template')) return;
 
-    // 4. 找到文章详情页特有的容器
     const container = document.querySelector('.post-block') || document.querySelector('.comments');
     if (!container) return;
 
-    // 5. 防止 Pjax 重复加载
     const oldGiscus = document.querySelector('.giscus-frame');
     if (oldGiscus) oldGiscus.remove();
 
-    // 6. 注入 Giscus
     let gDiv = document.getElementById('giscus-container');
     if (!gDiv) {
       gDiv = document.createElement('div');
