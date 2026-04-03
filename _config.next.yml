@@ -89,7 +89,7 @@ bookmark:               # 开启阅读书签记忆功能 (长文必备)
 related_posts:          # 相关文章推荐 (底部展示)
   enable: true
   title: 推荐阅读
-  display_in_home: false
+  display_in_home: true
   params:
     maxCount: 5
 
