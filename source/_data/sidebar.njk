@@ -1,0 +1,15 @@
+{# 高频标签词云 #}
+{% if site.tags.length > 0 %}
+<div class="sidebar-widget tag-cloud-widget">
+  <div class="sidebar-widget-title">标签词云</div>
+  <div class="tag-cloud">
+    {% tagcloud %}
+  </div>
+</div>
+{% endif %}
+
+<div class="sidebar-widget">
+  <div class="sidebar-widget-title">文章词云</div>
+  <canvas id="wordcloud-canvas" width="240" height="200"
+          style="width:100%;border-radius:8px;"></canvas>
+</div>

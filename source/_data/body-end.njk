@@ -1,91 +1,147 @@
 <script>
-  /**
-   * 功能 1：搜索关键词自动平滑滚动 (加入智能重试机制)
-   */
-  function scrollToSearchKeyword() {
-    let attempts = 0;
-    const maxAttempts = 10; // 最多尝试 10 次 (约 2 秒)
+// ═══════════════════════════════════════════════════════════════
+// 功能 1：搜索关键词自动平滑滚动 (加入智能重试机制)
+// ═══════════════════════════════════════════════════════════════
+function scrollToSearchKeyword() {
+  let attempts = 0;
+  const maxAttempts = 10;
 
-    function checkAndScroll() {
-      // 寻找 NexT 搜索脚本生成的高亮标签
-      var keyword = document.querySelector('mark.search-keyword');
-      
-      if (keyword) {
-        // 找到了，执行平滑滚动并居中
-        keyword.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      } else if (attempts < maxAttempts) {
-        // 没找到且次数没用完，等 200ms 后再试一次
-        attempts++;
-        setTimeout(checkAndScroll, 200);
-      }
+  function checkAndScroll() {
+    var keyword = document.querySelector('mark.search-keyword');
+    if (keyword) {
+      keyword.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else if (attempts < maxAttempts) {
+      attempts++;
+      setTimeout(checkAndScroll, 200);
     }
+  }
+  setTimeout(checkAndScroll, 300);
+}
 
-    // 初次延迟 300ms 后开始探测
-    setTimeout(checkAndScroll, 300);
+// ═══════════════════════════════════════════════════════════════
+// 功能 2：Giscus 评论区动态加载 (精准过滤非文章页面)
+// ═══════════════════════════════════════════════════════════════
+function initGiscus() {
+  const path = window.location.pathname;
+
+  const isHome     = path === '/' || path.startsWith('/page/');
+  const isArchive  = path.startsWith('/archives/');
+  const isCategory = path.startsWith('/categories/');
+  const isTag      = path.startsWith('/tags/');
+
+  if (isHome || isArchive || isCategory || isTag || document.querySelector('.post-button')) {
+    console.log('⚡️ 当前为列表/归档页，跳过评论区加载');
+    return;
   }
 
-  /**
-   * 功能 2：Giscus 评论区动态加载 (精准过滤非文章页面)
-   */
-  function initGiscus() {
-    const path = window.location.pathname;
+  if (document.getElementById('hbe-template')) return;
 
-    // --- 严苛的过滤逻辑：以下页面绝对不加载评论 ---
-    const isHome = path === '/' || path.startsWith('/page/');
-    const isArchive = path.startsWith('/archives/');
-    const isCategory = path.startsWith('/categories/');
-    const isTag = path.startsWith('/tags/');
-    
-    // 如果符合上述任一条件，或者是列表页（带有阅读全文按钮），则直接退出
-    if (isHome || isArchive || isCategory || isTag || document.querySelector('.post-button')) {
-      console.log('⚡️ 当前为列表/归档页，跳过评论区加载');
-      return;
-    }
-    // ------------------------------------------
+  const container = document.querySelector('.post-block') || document.querySelector('.comments');
+  if (!container) return;
 
-    // 3. 如果是加密文章且尚未解锁，则不加载
-    if (document.getElementById('hbe-template')) return;
+  const oldGiscus = document.querySelector('.giscus-frame');
+  if (oldGiscus) oldGiscus.remove();
 
-    // 4. 找到文章详情页特有的容器
-    const container = document.querySelector('.post-block') || document.querySelector('.comments');
-    if (!container) return;
-
-    // 5. 防止 Pjax 重复加载
-    const oldGiscus = document.querySelector('.giscus-frame');
-    if (oldGiscus) oldGiscus.remove();
-
-    // 6. 注入 Giscus
-    let gDiv = document.getElementById('giscus-container');
-    if (!gDiv) {
-      gDiv = document.createElement('div');
-      gDiv.id = 'giscus-container';
-      gDiv.style.marginTop = '40px';
-      container.appendChild(gDiv);
-    }
-
-    const script = document.createElement('script');
-    script.src = 'https://giscus.app/client.js';
-    script.setAttribute('data-repo', 'Windsor-Andrew/blog');
-    script.setAttribute('data-repo-id', 'R_kgDORDYTUg');
-    script.setAttribute('data-category', 'Announcements');
-    script.setAttribute('data-category-id', 'DIC_kwDORDYTUs4C1wm4');
-    script.setAttribute('data-mapping', 'pathname');
-    script.setAttribute('data-strict', '0');
-    script.setAttribute('data-reactions-enabled', '1');
-    script.setAttribute('data-emit-metadata', '0');
-    script.setAttribute('data-input-position', 'bottom');
-    script.setAttribute('data-theme', 'dark');
-    script.setAttribute('data-lang', 'zh-CN');
-    script.crossOrigin = 'anonymous';
-    script.async = true;
-    gDiv.appendChild(script);
+  let gDiv = document.getElementById('giscus-container');
+  if (!gDiv) {
+    gDiv = document.createElement('div');
+    gDiv.id = 'giscus-container';
+    gDiv.style.marginTop = '40px';
+    container.appendChild(gDiv);
   }
 
-  function runAllEffects() {
-    scrollToSearchKeyword();
-    initGiscus();
+  const script = document.createElement('script');
+  script.src = 'https://giscus.app/client.js';
+  script.setAttribute('data-repo',           'Windsor-Andrew/blog');
+  script.setAttribute('data-repo-id',        'R_kgDORDYTUg');
+  script.setAttribute('data-category',       'Announcements');
+  script.setAttribute('data-category-id',    'DIC_kwDORDYTUs4C1wm4');
+  script.setAttribute('data-mapping',        'pathname');
+  script.setAttribute('data-strict',         '0');
+  script.setAttribute('data-reactions-enabled', '1');
+  script.setAttribute('data-emit-metadata',  '0');
+  script.setAttribute('data-input-position', 'bottom');
+  script.setAttribute('data-theme',          'dark');
+  script.setAttribute('data-lang',           'zh-CN');
+  script.crossOrigin = 'anonymous';
+  script.async = true;
+  gDiv.appendChild(script);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// 功能 3：文章内容词云渲染
+// ═══════════════════════════════════════════════════════════════
+function initWordCloud() {
+  const canvas = document.getElementById('wordcloud-canvas');
+  if (!canvas) return;   // 侧边栏不存在时（首页列表等）直接跳过
+
+  // 防止 pjax 切页时重复渲染：清空旧内容
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  function renderCloud() {
+    fetch('/wordcloud.json')
+      .then(r => r.json())
+      .then(words => {
+        if (!words || words.length === 0) return;
+
+        const maxVal = words[0][1] || 1;
+
+        // 根据暗色模式动态切换颜色方案
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        const palette = isDark
+          ? ['#37c6c0', '#5b8af0', '#f06060', '#f5a623', '#a78bfa', '#34d399']
+          : ['#0ea5e9', '#f97316', '#10b981', '#8b5cf6', '#ef4444', '#f59e0b'];
+
+        WordCloud(canvas, {
+          list: words.map(([w, v]) => [
+            w,
+            // 字号映射：最高频词28px，最低频词12px
+            Math.round(12 + (v / maxVal) * 16)
+          ]),
+          gridSize       : 6,
+          weightFactor   : 1,
+          fontFamily     : 'Noto Sans SC, sans-serif',
+          color          : () => palette[Math.floor(Math.random() * palette.length)],
+          backgroundColor: 'transparent',
+          rotateRatio    : 0.25,   // 25% 的词会旋转 90°
+          rotationSteps  : 2,      // 只允许 0° 和 90° 两种角度
+          shrinkToFit    : true,
+          drawOutOfBound : false,
+          // 点击词云跳转到对应标签页（可选）
+          click: function(item) {
+            window.location.href = '/tags/' + encodeURIComponent(item[0]) + '/';
+          },
+          hover: function(item, dimension, event) {
+            canvas.style.cursor = item ? 'pointer' : 'default';
+          }
+        });
+      })
+      .catch(err => console.warn('词云数据加载失败:', err));
   }
 
-  document.addEventListener('DOMContentLoaded', runAllEffects);
-  document.addEventListener('pjax:success', runAllEffects);
+  // 动态懒加载 wordcloud2.js，避免在所有页面都引入该库
+  if (typeof WordCloud === 'undefined') {
+    const s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/wordcloud2.js/1.2.2/wordcloud2.min.js';
+    s.onload = renderCloud;   // 库加载完毕后再渲染
+    s.onerror = () => console.warn('wordcloud2.js 加载失败，请检查网络');
+    document.head.appendChild(s);
+  } else {
+    // 库已加载（pjax 切页后的情况）
+    renderCloud();
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// 统一调度入口
+// ═══════════════════════════════════════════════════════════════
+function runAllEffects() {
+  scrollToSearchKeyword();
+  initGiscus();
+  initWordCloud();
+}
+
+document.addEventListener('DOMContentLoaded', runAllEffects);
+document.addEventListener('pjax:success',    runAllEffects);
 </script>
