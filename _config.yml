@@ -176,11 +176,3 @@ encrypt:
   default_message: "请输入密码查看正文内容："
   default_decryption_error: "密码错误，请重试！"
 
-tag_cloud:
-  textFont: "Noto Sans SC, sans-serif"
-  textColor: '#333'
-  textAmount: 200
-  outlineColor: '#e0e0e0'
-  backgroundColor: 'transparent'
-  startFontSize: 14
-  endFontSize: 28
