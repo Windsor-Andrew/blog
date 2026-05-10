@@ -12,6 +12,7 @@
     "version": "8.1.1"
   },
   "dependencies": {
+    "@node-rs/jieba": "^2.0.1",
     "hexo": "^8.0.0",
     "hexo-abbrlink": "^2.2.1",
     "hexo-blog-encrypt": "^3.1.9",
@@ -29,8 +30,7 @@
     "hexo-symbols-count-time": "^0.7.1",
     "hexo-tag-aplayer": "^3.0.4",
     "hexo-theme-landscape": "^1.0.0",
-    "hexo-theme-next": "^8.27.0",
-    "nodejieba": "^3.5.8"
+    "hexo-theme-next": "^8.27.0"
   },
   "overrides": {
     "strip-ansi": "6.0.1"
